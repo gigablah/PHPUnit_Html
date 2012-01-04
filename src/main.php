@@ -63,8 +63,9 @@ foreach ($_REQUEST as $n => $v) {
 }
 
 // Sanatize a few config variables
-if (!isset($config['tpldir'])) {
-    $config['tpldir'] = __DIR__.'/templates/'.($config['template'] ?: 'default').'/';
+if (is_null($config['tpldir'])) {
+    $config['tpldir'] = __DIR__.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.
+                        ($config['template'] ?: 'default').DIRECTORY_SEPARATOR;
 }
 
 if (isset($config['groups']) && is_string($config['groups'])) {
@@ -152,7 +153,7 @@ $filter->addFileToBlacklist($_SERVER['SCRIPT_FILENAME'], 'PHPUNIT', FALSE);
 require(__DIR__.'/PHPUnit_Html_Printer.php');
 require(__DIR__.'/PHPUnit_Html_TestRunner.php');
 
-PHPUnit_HTML_TestRunner::run($config);
+PHPUnit_HTML_TestRunner::run(null, $config);
 
 /* vim: set expandtab tabstop=4 shiftwidth=4: */
 
