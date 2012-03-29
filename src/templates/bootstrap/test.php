@@ -1,9 +1,8 @@
 <div class="test <?PHP echo "test-{$testno}".($testno % 1 ? ' odd' : ' even').($testno == ($numtests - 1) ? ' last ' : ' ').$test['status'].($test['status'] !== 'passed' ? ' open' : ' closed'); ?>">
   <div class="icon"></div>
   <div class="name"><?PHP echo htmlentities($test['name']); ?></div>
-  <div class="desc"><span class="assertions">Assertions: <b><?PHP echo (int)$test['assertions'] ?></b>,</span><span class="problems">Problems: <b><?PHP echo count($test['deprecated']) + count($test['errors']); ?></b>,</span><span class="time">Executed in <?PHP printf('%06f', $test['time']); ?> seconds.</span></div>
-  
   <div class="expand-button"></div>
+  <div class="desc"><span class="assertions">Assertions: <b><?PHP echo (int)$test['assertions'] ?></b>,</span><span class="problems">Problems: <b><?PHP echo count($test['deprecated']) + count($test['errors']); ?></b>,</span><span class="time">Executed in <?PHP printf('%06f', $test['time']); ?> seconds.</span></div>
   <div class="more">
 	<hr>
 	<?PHP if (isset($test['result']['e'])) { ?>

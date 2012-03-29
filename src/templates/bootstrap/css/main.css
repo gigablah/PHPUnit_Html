@@ -46,7 +46,8 @@ pre {
 }
 
 .box {
-  overflow: auto;
+  position: relative;
+  overflow: hidden !important;
   margin: 10px 0;
   background-color:#EEEEEE;
   border-top:1px solid white;
@@ -175,11 +176,12 @@ pre {
 
 .name {
   float: left;
-  width: 332px;
+  width: auto;
+  cursor: pointer !important;
 }
 
 .name h1 {
-  line-height: 68px !important;
+  line-height: 50px !important;
   margin-bottom: 0 !important;
   text-shadow: 0 1px 0 #fff;
   letter-spacing: -1px;
@@ -188,32 +190,42 @@ pre {
 .tests .name {
   line-height: 16px;
   font-size: 14px;
-  width: 380px;
+  width: auto;
   font-weight: bold;
 }
 
 .desc {
   float: left;
+  position: absolute;
+  left: 540px;
   line-height: 16px;
   font-size: 14px;
-  margin-top: 8px;
+  margin-top: -10px;
   color: #999;
   text-shadow: 0 1px 0 #fff;
+  width: auto;
 }
 
 .tests .desc {
   margin-top: 0;
   text-shadow: 0 1px 0 #fff;
+  float: left;
 }
 
-.desc .stats {
-  line-height: 32px;
-  font-size: 18px;
-  display: block;
+.stats {
+  float: left;
+  line-height: 16px;
+  font-size: 14px;
+  margin-top: -10px;
+  color: #999;
+  text-shadow: 0 1px 0 #fff;
+  width: auto;
 }
-
+.stats span {
+  margin-right: 4px;
+}
 .suite .desc span {
-  margin-right: 0.5em;
+  margin-right: 4px;
 }
 
 .message {
