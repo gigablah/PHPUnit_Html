@@ -35,7 +35,7 @@ class PHPUnit_Html_TestRunner extends PHPUnit_TextUI_TestRunner {
      */
     public static function run($test=null, array $arguments = array()) {
 		
-        $printer = $arguments['printer'] = new PHPUnit_Html_Printer($arguments['tpldir']);
+        $arguments['printer'] = new PHPUnit_Html_Printer($arguments['tpldir']);
 		
         try {
             if ($arguments['bootstrap']) {
@@ -64,11 +64,11 @@ class PHPUnit_Html_TestRunner extends PHPUnit_TextUI_TestRunner {
             }
 
             $result = $runner->doRun($suite, $arguments);
-            $printer->printResult($result);
+            $arguments['printer']->printResult($result);
 
         } catch (Exception $e) {
 
-            $printer->printAborted($e);
+            $arguments['printer']->printAborted($e);
 
         }
     }

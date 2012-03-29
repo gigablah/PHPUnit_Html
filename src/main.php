@@ -67,6 +67,11 @@ if (is_null($config['tpldir'])) {
     $config['tpldir'] = __DIR__.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.
                         ($config['template'] ?: 'default').DIRECTORY_SEPARATOR;
 }
+if (!is_dir($config['tpldir'])) {
+    $config['template'] = 'default';
+    $config['tpldir'] = __DIR__.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.
+                        'default'.DIRECTORY_SEPARATOR;
+}
 
 if (isset($config['groups']) && is_string($config['groups'])) {
     $config['groups'] = explode(',', $config['groups']);
@@ -76,7 +81,7 @@ if (isset($config['excludeGroups']) && is_string($config['excludeGroups'])) {
     $config['excludeGroups'] = explode(',', $config['excludeGroups']);
 }
 
-foreach (array('phpunit_html', 'tpldir') as $d) {
+foreach (array('phpunit_html') as $d) {
     if ($config[$d]) {
         $config[$d] = realpath($config[$d]).DIRECTORY_SEPARATOR;
         if (!is_dir($config[$d])) {
@@ -132,7 +137,12 @@ if (isset($_SERVER['PATH_INFO'])) {
 
 require($config['phpunit'].'PHPUnit/Autoload.php');
 
-$filter = PHP_CodeCoverage_Filter::getInstance();
+if (method_exists('PHP_CodeCoverage_Filter', 'getInstance')) {
+	$filter = PHP_CodeCoverage_Filter::getInstance();
+}
+else {
+	$filter = new PHP_CodeCoverage_Filter();
+}
 
 $filter->addDirectoryToBlacklist(
     __DIR__, '.php', '', 'PHPUNIT', FALSE
