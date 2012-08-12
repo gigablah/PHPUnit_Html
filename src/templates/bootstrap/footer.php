@@ -6,10 +6,10 @@
 		</div>
 	</footer>
     
-    <script src="<?php echo $this->url('/template/javascript/jquery.js');?>"></script>
-    <script src="<?php echo $this->url('/template/javascript/main.js');?>"></script>
+    <script src="<?php echo $this->url('template/javascript/jquery.js');?>"></script>
+    <script src="<?php echo $this->url('template/javascript/main.js');?>"></script>
 	<!--[if lt IE 9]>
-	<script src="<?php echo $this->url('/template/javascript/html5.js');?>"></script>
+	<script src="<?php echo $this->url('template/javascript/html5.js');?>"></script>
 	<![endif]-->
   </body>
 </html>

@@ -34,23 +34,23 @@ class PHPUnit_Html_TestRunner extends PHPUnit_TextUI_TestRunner {
      * @return  void
      */
     public static function run($test=null, array $arguments = array()) {
-		
+
         $arguments['printer'] = new PHPUnit_Html_Printer($arguments['tpldir']);
-		
+
         try {
-            if ($arguments['bootstrap']) {
-                PHPUnit_Util_Fileloader::checkAndLoad($arguments['bootstrap'], $arguments['syntaxCheck']);
-            }
-			
             $runner = new PHPUnit_Html_TestRunner();
             $xml = null;
 
             if (isset($arguments['configuration'])) {
                 $xml = PHPUnit_Util_Configuration::getInstance($arguments['configuration']);
                 $config = $xml->getPHPUnitConfiguration();
-                if (is_array($config)) $arguments = array_merge($config, $arguments);
+                if (is_array($config)) $arguments = array_merge($arguments, $config);
             }
-			
+
+            if ($arguments['bootstrap']) {
+                PHPUnit_Util_Fileloader::checkAndLoad($arguments['bootstrap'], $arguments['syntaxCheck']);
+            }
+
             if ($xml && !isset($arguments['test']) && !isset($arguments['testFile'])) {
                 $suite = $xml->getTestSuiteConfiguration($arguments['syntaxCheck']);
             }

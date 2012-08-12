@@ -74,7 +74,7 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
      * @return  string
      */
     protected function url($file) {
-        return str_replace(' ', '%20', $_SERVER['PHP_SELF'].'/'.$file);
+        return str_replace(' ', '%20', (isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '').'/'.$file);
     }
 
     /**
@@ -134,6 +134,12 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
      */
     protected function listing($suite, $test) {
         // Return file source code
+        if (strpos($suite['name'], '::') !== false) {
+            list($suite['name'], $dummy) = explode('::', $suite['name']);
+        }
+        if (strpos($test['name'], ' ') !== false) {
+            list($test['name'], $dummy) = explode(' ', $test['name']);
+        }
         $r = new \ReflectionMethod($suite['name'], $test['name']);
         $f = $r->getFileName();
         $s = $r->getStartLine();
@@ -170,9 +176,12 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
      * @return  array                   reference to suite
      */
     protected function &suite($name) {
+        if (strpos($name, '::') !== false) {
+            list($name, $dummy) = explode('::', $name);
+        }
         if ($name === null) {
-            unset($this->_suite);
-            $this->_suite = null;
+            //unset($this->_suite);
+            //$this->_suite = null;
         } else {
             if (!isset($this->results['suites'][$name])) {
                 $this->results['suites'][$name] = array('name' => $name, 'suite' => null, 'tests' => array(), 'status' => null, 'stats' => null, 'assertions' => 0, 'errors' => 0, 'deprecated' => 0, 'time' => 0);
@@ -192,6 +201,7 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
      */
     public function addError(PHPUnit_Framework_Test $test, Exception $e, $time) {
         $t =& $this->test($test->getName());
+        $t['status'] = 'failed';
         $t['errors'][] = compact('e', 'time');
     }
 

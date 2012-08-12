@@ -1,6 +1,7 @@
 $(document).ready(function() {
-  $('div.name').click(function() {
-    $(this).next('.expand-button, .toggle-button').click();
+  $('section.suite, div.test').click(function(e) {
+    $(this).find('.expand-button:first').click();
+    e.stopPropagation();
   });
   $('.expand-button').each(function(index) {
     $(this).click(function(e) {
@@ -10,6 +11,7 @@ $(document).ready(function() {
         $(this).next('.more').slideDown('fast');
       }
       $(this).parent().toggleClass('open').toggleClass('closed');
+      e.stopPropagation();
     });
   });
   $('.toggle-button').each(function(index) {

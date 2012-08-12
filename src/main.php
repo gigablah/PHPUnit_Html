@@ -64,13 +64,11 @@ foreach ($_REQUEST as $n => $v) {
 
 // Sanatize a few config variables
 if (is_null($config['tpldir'])) {
-    $config['tpldir'] = __DIR__.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.
-                        ($config['template'] ?: 'default').DIRECTORY_SEPARATOR;
+    $config['tpldir'] = __DIR__.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.($config['template'] ?: 'default').'/';
 }
 if (!is_dir($config['tpldir'])) {
     $config['template'] = 'default';
-    $config['tpldir'] = __DIR__.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.
-                        'default'.DIRECTORY_SEPARATOR;
+    $config['tpldir'] = __DIR__.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.'default'.DIRECTORY_SEPARATOR;
 }
 
 if (isset($config['groups']) && is_string($config['groups'])) {

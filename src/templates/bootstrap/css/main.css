@@ -1,6 +1,7 @@
 body {
   color: #000000;
   background-color: #EEEEEE;
+  background-image: url('/template/images/linen.png');
 }
 
 hr {
@@ -25,8 +26,8 @@ pre {
 }
 
 .rounded {
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
 }
 
 .source .rounded {
@@ -56,11 +57,11 @@ pre {
   border-bottom: 0;
   padding:7px;
   color: #858585;
-  font-family: "Lucida Grande", Helvetica, Arial, "MS Trebuchet", sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, "MS Trebuchet", sans-serif;
   font-size: 12px;
-  -webkit-box-shadow: 0 0 7px #999;
-  -moz-box-shadow: 0 0 7px #999;
-  box-shadow: 0px 0px 8px #888;
+  -webkit-box-shadow: 0 1px 7px #AAA;
+  -moz-box-shadow: 0 1px 7px #AAA;
+  box-shadow: 0px 1px 7px #AAA;
   background-image: linear-gradient(top, rgb(225,225,225) 30px, rgb(238,238,238) 80px);
   background-image: -o-linear-gradient(top, rgb(225,225,225) 30px, rgb(238,238,238) 80px);
   background-image: -moz-linear-gradient(top, rgb(225,225,225) 30px, rgb(238,238,238) 80px);
@@ -73,7 +74,6 @@ pre {
   overflow: auto;
   vertical-align: middle;
   clear: both;
-  margin-bottom: 24px;
 }
 
 .suite.last {
@@ -88,6 +88,7 @@ pre {
   clear: both;
   padding: 6px 0;
   border-top: 1px solid white;
+  position: relative;
 }
 
 .icon {
@@ -111,7 +112,9 @@ pre {
 
 .tests .icon {
   height: 16px;
-  width: 16px;
+  width: 14px;
+  position: absolute;
+  top: 7px;
 }
 
 .tests .passed .icon {
@@ -180,7 +183,7 @@ pre {
   cursor: pointer !important;
 }
 
-.name h1 {
+.name h1, .aborted h1 {
   line-height: 50px !important;
   margin-bottom: 0 !important;
   text-shadow: 0 1px 0 #fff;
@@ -192,15 +195,15 @@ pre {
   font-size: 14px;
   width: auto;
   font-weight: bold;
+  text-indent: 20px;
 }
 
 .desc {
   float: left;
-  position: absolute;
-  left: 540px;
   line-height: 16px;
   font-size: 14px;
   margin-top: -10px;
+  margin-left: 20px;
   color: #999;
   text-shadow: 0 1px 0 #fff;
   width: auto;
@@ -209,7 +212,7 @@ pre {
 .tests .desc {
   margin-top: 0;
   text-shadow: 0 1px 0 #fff;
-  float: left;
+  float: right;
 }
 
 .stats {
@@ -221,9 +224,11 @@ pre {
   text-shadow: 0 1px 0 #fff;
   width: auto;
 }
+
 .stats span {
   margin-right: 4px;
 }
+
 .suite .desc span {
   margin-right: 4px;
 }
@@ -357,6 +362,7 @@ pre {
   font-size: 1em;
   line-height: 1.1em;
   margin-bottom: 0;
+  width: 100%;
 } 
 
 .code .line {
@@ -389,12 +395,13 @@ pre {
 
 #footer {
   color: #858585;
-  font-family: "Lucida Grande", Helvetica, Arial, "MS Trebuchet", sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, "MS Trebuchet", sans-serif;
   font-size: 12px;
   margin-bottom: 20px;
 }
 
 footer {
+  margin: 20px 0;
   color: #aaa;
   text-shadow: 1px 1px 0 #fff;
 }
@@ -439,6 +446,55 @@ footer .copyright {
 
 .clear {
   clear: both;
+}
+
+.badge {
+  color: white;
+  background-color: #CCC;
+  text-shadow: none;
+  display: block;
+  min-width: 12px;
+  float: left;
+  text-align: center
+}
+
+.badge-total {
+  color: white;
+  background-color: #AAA;
+}
+
+.badge-time {
+
+}
+
+.badge-assertions {
+  color: white;
+  background-color: #AAA;
+}
+
+.badge-problems {
+  color: white;
+  background-color: #B94A48;
+}
+
+.badge-passed {
+  color: white;
+  background-color: #468847;
+}
+
+.badge-failed {
+  color: white;
+  background-color: #B94A48;
+}
+
+.badge-skipped {
+  color: white;
+  background-color: #3A87AD;
+}
+
+.badge-incomplete {
+  color: white;
+  background-color: #F89406;
 }
 
 /* vim: set expandtab tabstop=2 shiftwidth=2: */
