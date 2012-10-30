@@ -1,3 +1,0 @@
-Action markdown "D:/My Webs/libs/PHP Markdown Handler/markdown/handler.php"
-AddHandler markdown .md
-ReadmeName README.md

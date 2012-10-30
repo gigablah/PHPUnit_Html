@@ -1,16 +1,16 @@
 <?php
-/** 
+/**
  * HTML format PHPUnit tests results.
  *
  * To allow the running of normal PHPUnit tests from a web browser.
  *
  * @package    PHPUnit_Html
  * @author     Nick Turner
+ * @author     Chris Heng
  * @copyright  2011 Nick Turner <nick@nickturner.co.uk>
  * @license    http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link       http://www.nickturner.co.uk/
  */
-
 
 /**
  * Prints the result of a PHPUnit_TextUI_TestRunner to a web browser
@@ -18,9 +18,10 @@
  *
  * @package    PHPUnit_Html
  * @author     Nick Turner
+ * @author     Chris Heng
  */
-class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Framework_TestListener {
-
+class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Framework_TestListener
+{
     /**
      * @var array                       reference to current suite in {@link $results}
      */
@@ -57,7 +58,8 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
      * @param   string      $tpldir     template directory
      * @throws  InvalidArgumentException
      */
-    public function __construct($tpldir) {
+    public function __construct($tpldir)
+    {
         $this->tpldir = rtrim($tpldir, DIRECTORY_SEPARATOR);
         if (!is_dir($this->tpldir)) {
             throw new \InvalidArgumentException('No such template directory: '.$this->tpldir);
@@ -73,7 +75,8 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
      * @param   string       $file       virtual path to required resource
      * @return  string
      */
-    protected function url($file) {
+    protected function url($file)
+    {
         return str_replace(' ', '%20', (isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '').'/'.$file);
     }
 
@@ -85,7 +88,8 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
      * @param   int         $numLines   number of lines to show
      * @return  string                  highlighted source HTML formatted
      */
-    protected function highlightSourceAround($fileName, $midLine, $numLines = true) {
+    protected function highlightSourceAround($fileName, $midLine, $numLines = true)
+    {
         $offset = max(0, $midLine - ceil($numLines / 2));
         return $this->highlightSource($fileName, $offset, $numLines, $midLine);
     }
@@ -99,7 +103,8 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
      * @param int           $markLine   line number to mark if required
      * @return  string                  highlighted source HTML formatted
      */
-    protected function highlightSource($fileName, $firstLine = 1, $numLines = null, $markLine = null) {
+    protected function highlightSource($fileName, $firstLine = 1, $numLines = null, $markLine = null)
+    {
         if (!isset($this->source[$fileName])) {
             $lines = highlight_file($fileName, true);
             $lines = explode("<br />", $lines);
@@ -122,7 +127,7 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
 
         return $html;
     }
-    
+
     /**
      * Retrieve the source for the given test with syntax highlighting
      *
@@ -132,7 +137,8 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
      * @param   int         $markLine   line number to mark if required
      * @return  string                  highlighted source HTML formatted
      */
-    protected function listing($suite, $test) {
+    protected function listing($suite, $test)
+    {
         // Return file source code
         if (strpos($suite['name'], '::') !== false) {
             list($suite['name'], $dummy) = explode('::', $suite['name']);
@@ -145,7 +151,7 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
         $s = $r->getStartLine();
         $e = $r->getEndLine();
         return '<h1>'.htmlentities($f).'</h1>'.$this->highlightSource($f, $s, ($e - $s) + 1);
-    } 
+    }
 
     /**
      * Return reference to named test in {@link $results}
@@ -153,14 +159,15 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
      * @param   string      $name       test name
      * @return  array                   reference to test
      */
-    protected function &test($name) {
+    protected function &test($name)
+    {
         if ($name === null) {
             unset($this->_test);
             $this->_test = null;
         } else {
             if (!$this->_suite) {
                 throw new \Exception('Suite is unknown');
-            } 
+            }
             if (!isset($this->_suite['tests'][$name])) {
                 $this->_suite['tests'][$name] = array('name' => $name, 'test' => null, 'errors' => null, 'output' => null, 'status' => null, 'results' => null, 'assertions' => 0, 'deprecated' => null, 'time' => 0);
             }
@@ -175,7 +182,8 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
      * @param   string      $name       suite name
      * @return  array                   reference to suite
      */
-    protected function &suite($name) {
+    protected function &suite($name)
+    {
         if (strpos($name, '::') !== false) {
             list($name, $dummy) = explode('::', $name);
         }
@@ -199,7 +207,8 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
      * @param   float                   $time
      * @return  void
      */
-    public function addError(PHPUnit_Framework_Test $test, Exception $e, $time) {
+    public function addError(PHPUnit_Framework_Test $test, \Exception $e, $time)
+    {
         $t =& $this->test($test->getName());
         $t['status'] = 'failed';
         $t['errors'][] = compact('e', 'time');
@@ -213,7 +222,8 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
      * @param   float                                  $time
      * @return  void
      */
-    public function addFailure(PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time) {
+    public function addFailure(PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time)
+    {
         $t =& $this->test($test->getName());
         $t['status'] = 'failed';
         $t['result'] = compact('e', 'time');
@@ -227,7 +237,8 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
      * @param   float                   $time
      * @return  void
      */
-    public function addIncompleteTest(PHPUnit_Framework_Test $test, Exception $e, $time) {
+    public function addIncompleteTest(PHPUnit_Framework_Test $test, \Exception $e, $time)
+    {
         $t =& $this->test($test->getName());
         $t['status'] = 'incomplete';
         $t['result'] = compact('e', 'time');
@@ -241,7 +252,8 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
      * @param   float                   $time
      * @return  void
      */
-    public function addSkippedTest(PHPUnit_Framework_Test $test, Exception $e, $time) {
+    public function addSkippedTest(PHPUnit_Framework_Test $test, \Exception $e, $time)
+    {
         $t =& $this->test($test->getName());
         $t['status'] = 'skipped';
         $t['result'] = compact('e', 'time');
@@ -253,7 +265,8 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
      * @param   PHPUnit_Framework_Test  $test
      * @return  void
      */
-    public function startTest(PHPUnit_Framework_Test $test) {
+    public function startTest(PHPUnit_Framework_Test $test)
+    {
         $t =& $this->test($test->getName());
         $t['test'] = $test;
         ob_start();
@@ -266,7 +279,8 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
      * @param   float                   $time
      * @return  void
      */
-    public function endTest(PHPUnit_Framework_Test $test, $time) {
+    public function endTest(PHPUnit_Framework_Test $test, $time)
+    {
         $t =& $this->test($test->getName());
         if (!$t['status']) {
             $t['status'] = 'passed';
@@ -287,7 +301,8 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
      * @param   PHPUnit_Framework_TestSuite $suite
      * @return  void
      */
-    public function startTestSuite(PHPUnit_Framework_TestSuite $suite) {
+    public function startTestSuite(PHPUnit_Framework_TestSuite $suite)
+    {
         $s =& $this->suite($suite->getName());
         $t['suite'] = $suite;
     }
@@ -298,7 +313,8 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
      * @param   PHPUnit_Framework_TestSuite $suite
      * @return  void
      */
-    public function endTestSuite(PHPUnit_Framework_TestSuite $suite) {
+    public function endTestSuite(PHPUnit_Framework_TestSuite $suite)
+    {
         $s =& $this->suite($suite->getName());
         $s['stats'] = array('total' => count($s['tests']), 'passed' => 0, 'failed' => 0, 'skipped' => 0, 'incomplete' => 0);
         foreach ($s['tests'] as $t) {
@@ -317,7 +333,8 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
      *
      * @return  array
      */
-    public function getResults() {
+    public function getResults()
+    {
         return $this->results;
     }
 
@@ -329,7 +346,8 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
      * @param   string      $buffer     data to write to output
      * @return  void
      */
-    public function write($buffer) {
+    public function write($buffer)
+    {
     }
 
     /**
@@ -341,7 +359,8 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
      * @param   PHPUnit_Framework_TestResult $result
      * @return  void
      */
-    public function printResult(PHPUnit_Framework_TestResult $result) {
+    public function printResult(PHPUnit_Framework_TestResult $result)
+    {
         $title = $result->topTestSuite()->getName();
         $suiteno = 0;
         $numsuites = count($this->results['suites']);
@@ -364,14 +383,11 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
      * @param   PHPUnit_Framework_TestResult $result
      * @return  void
      */
-    public function printAborted(Exception $e) {
+    public function printAborted(\Exception $e)
+    {
         $title = 'Aborted';
         include($this->tpldir.'/header.php');
         include($this->tpldir.'/aborted.php');
         include($this->tpldir.'/footer.php');
     }
 }
-
-/* vim: set expandtab tabstop=4 shiftwidth=4: */
-
-?>

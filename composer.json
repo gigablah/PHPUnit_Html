@@ -1,0 +1,34 @@
+{
+    "name": "gigablah/phpunit-html",
+    "description": "Browser based PHPUnit testing",
+    "type": "library",
+    "keywords": [
+        "phpunit",
+        "xunit",
+        "testing"
+    ],
+    "homepage": "https://github.com/gigablah/PHPUnit_Html",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Nick Turner",
+            "email": "nick@nickturner.co.uk"
+        },
+        {
+            "name": "Chris Heng",
+            "email": "hengkuanyen@gmail.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/gigablah/PHPUnit_Html/issues"
+    },
+    "require": {
+        "php": ">=5.3.3",
+        "phpunit/phpunit": "3.7.*",
+    },
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    }
+}
