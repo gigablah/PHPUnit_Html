@@ -7,7 +7,7 @@
     <hr>
     <?php if (isset($test['result']['e'])) { ?>
     <div class="result"><pre>
-    <?php echo htmlentities(PHPUnit_Framework_TestFailure::exceptionToString($test['result']['e']).PHPUnit_Util_Filter::getFilteredStacktrace($test['result']['e'], FALSE)); ?>
+    <?php echo htmlentities(PHPUnit_Framework_TestFailure::exceptionToString($test['result']['e']).PHPUnit_Util_Filter::getFilteredStacktrace($test['result']['e'])); ?>
     </pre></div>
     <?php } ?>
     <?php if ($test['errors'] !== null) { foreach($test['errors'] as $error) { $e = $error['e']; include('exception.php'); } } ?>
