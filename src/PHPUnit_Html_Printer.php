@@ -281,6 +281,10 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
      */
     public function endTest(PHPUnit_Framework_Test $test, $time)
     {
+        if ($test instanceof PHPUnit_Framework_Warning) {
+            ob_end_clean();
+            throw new \Exception($test->getStatusMessage());
+        }
         $t =& $this->test($test->getName());
         if (!$t['status']) {
             $t['status'] = 'passed';
