@@ -1,6 +1,9 @@
 $(document).ready(function() {
   $('section.suite, div.test').click(function(e) {
-    $(this).find('.expand-button:first').click();
+    el = e.srcElement || e.target;
+    if (!$(el).parents('div.result').length && !$(el).parents('div.source').length) {
+      $(this).find('.expand-button:first').click();
+    }
     e.stopPropagation();
   });
   $('.expand-button').each(function(index) {
