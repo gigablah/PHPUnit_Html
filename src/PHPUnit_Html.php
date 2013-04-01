@@ -1,4 +1,5 @@
 <?php
+
 /**
  * HTML format PHPUnit tests results.
  *
@@ -22,7 +23,7 @@
 class PHPUnit_Html
 {
     /**
-     * @var array                       default configuration options
+     * @var array Default configuration options
      */
     private $defaults = array(
         'phpunit_html' => null,
@@ -51,14 +52,14 @@ class PHPUnit_Html
     );
 
     /**
-     * @var array                       runtime configuration options
+     * @var array Runtime configuration options
      */
     private $config;
 
     /**
      * Constructor.
      *
-     * @param   array       $config     configuration options
+     * @param array $config Configuration options
      */
     public function __construct($config = array())
     {
@@ -73,19 +74,19 @@ class PHPUnit_Html
 
         // Merge any config parameters specified in the request
         foreach ($_REQUEST as $n => $v) {
-            if (!array_key_exists($n, $defaults)) {
+            if (!array_key_exists($n, $this->defaults)) {
                 throw new \Exception('Unknown request parameter: '.$n);
             }
 
             if (is_bool($this->config[$n])) {
                 if (!isset($v) || $v === '' || strcasecmp($v, 'true') === 0 || $v === '1') {
                     $_REQUEST[$n] = true;
-                } else if (strcasecmp($v, 'false') === 0 || $v === '0') {
+                } elseif (strcasecmp($v, 'false') === 0 || $v === '0') {
                     $_REQUEST[$n] = false;
                 } else {
                     throw new \Exception("Request parameter '$n' must be either '0', '1', 'true', 'false'.");
                 }
-            } else if (!isset($v) || $v === '') {
+            } elseif (!isset($v) || $v === '') {
                 throw new \Exception("Request parameter '$n' must have a value.");
             }
 
@@ -121,8 +122,6 @@ class PHPUnit_Html
 
     /**
      * Execute the test.
-     *
-     * @return  void
      */
     public function run()
     {
@@ -132,8 +131,7 @@ class PHPUnit_Html
     /**
      * Serve a requested resource.
      *
-     * @param   array       $config     configuration options
-     * @return  void
+     * @param array $config Configuration options
      */
     private function handleResourceRequest($config = array())
     {
@@ -147,12 +145,22 @@ class PHPUnit_Html
             $file = $root.substr($path, 10);
             if (file_exists($file)) {
                 switch (pathinfo($file, PATHINFO_EXTENSION )) {
-                    case 'css': $mime = 'text/css'; break;
-                    case 'js':  $mime = 'text/js'; break;
-                    case 'gif': $mime = 'image/gif'; break;
-                    case 'png': $mime = 'image/png'; break;
+                    case 'css':
+                        $mime = 'text/css';
+                        break;
+                    case 'js':
+                        $mime = 'text/js';
+                        break;
+                    case 'gif':
+                        $mime = 'image/gif';
+                        break;
+                    case 'png':
+                        $mime = 'image/png';
+                        break;
                     case 'jpeg':
-                    case 'jpg': $mime = 'image/jpg'; break;
+                    case 'jpg':
+                        $mime = 'image/jpg';
+                        break;
                     default:
                         $finfo = finfo_open();
                         $mime = finfo_file($finfo, $file, FILEINFO_MIME);

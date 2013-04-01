@@ -1,4 +1,5 @@
 <?php
+
 /**
  * HTML format PHPUnit tests results.
  *
@@ -31,8 +32,7 @@ class PHPUnit_Html_TestRunner extends PHPUnit_TextUI_TestRunner
      * It will configure it to use a {@link PHPUnit_Html_Printer} object
      * as the default output printer.
      *
-     * @param   array       $arguments  configuration
-     * @return  void
+     * @param array $arguments Configuration
      */
     public static function run($test=null, array $arguments = array())
     {
@@ -54,8 +54,7 @@ class PHPUnit_Html_TestRunner extends PHPUnit_TextUI_TestRunner
 
             if ($xml && !isset($arguments['test']) && !isset($arguments['testFile'])) {
                 $suite = $xml->getTestSuiteConfiguration($arguments['syntaxCheck']);
-            }
-            else {
+            } else {
                 $arguments['test'] = getcwd();
                 $suite = $runner->getTest(
                     $arguments['test'],
@@ -66,11 +65,8 @@ class PHPUnit_Html_TestRunner extends PHPUnit_TextUI_TestRunner
 
             $result = $runner->doRun($suite, $arguments);
             $arguments['printer']->printResult($result);
-
         } catch (\Exception $e) {
-
             $arguments['printer']->printAborted($e);
-
         }
     }
 }

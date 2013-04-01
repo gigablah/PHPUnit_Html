@@ -23,40 +23,41 @@
 class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Framework_TestListener
 {
     /**
-     * @var array                       reference to current suite in {@link $results}
+     * @var array Reference to current suite in {@link $results}
      */
     private $_suite = null;
 
     /**
-     * @var array                       reference to current test in {@link $results}
+     * @var array Reference to current test in {@link $results}
      */
     private $_test = null;
 
     /**
-     * @var string                      path to template directory
+     * @var string Path to template directory
      */
     protected $tpldir = null;
 
     /**
-     * @var array                       array of tests by suite
+     * @var array Array of tests by suite
      */
     protected $results = array();
 
     /**
-     * @var array                       array of cached file contents
+     * @var array Array of cached file contents
      */
     protected $source = array();
 
     /**
-     * @var array                       array of deprecated information
+     * @var array Array of deprecated information
      */
     protected $deprecated = array();
 
     /**
      * Constructor.
      *
-     * @param   string      $tpldir     template directory
-     * @throws  InvalidArgumentException
+     * @param string $tpldir Template directory
+     *
+     * @throws InvalidArgumentException
      */
     public function __construct($tpldir)
     {
@@ -72,8 +73,9 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
      * Resource are served up by the main index so that the libraries resources need not
      * by in a directory accessible to the web server.
      *
-     * @param   string       $file       virtual path to required resource
-     * @return  string
+     * @param string $file Virtual path to required resource
+     *
+     * @return string
      */
     protected function url($file)
     {
@@ -83,10 +85,11 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
     /**
      * Retrieve the relevant portion of the PHP source file with syntax highlighting
      *
-     * @param   string      $fileName   path to the source file
-     * @param   int         $midLine    line to show around
-     * @param   int         $numLines   number of lines to show
-     * @return  string                  highlighted source HTML formatted
+     * @param string $fileName Path to the source file
+     * @param int    $midLine  Line to show around
+     * @param int    $numLines Number of lines to show
+     *
+     * @return string Highlighted source HTML formatted
      */
     protected function highlightSourceAround($fileName, $midLine, $numLines = true)
     {
@@ -97,11 +100,12 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
     /**
      * Retrieve the relevant portion of the PHP source file with syntax highlighting
      *
-     * @param string        $fileName   path to the source file
-     * @param int           $firstLine  first line number to show
-     * @param int           $numLines   number of lines to show
-     * @param int           $markLine   line number to mark if required
-     * @return  string                  highlighted source HTML formatted
+     * @param string $fileName  Path to the source file
+     * @param int    $firstLine First line number to show
+     * @param int    $numLines  Number of lines to show
+     * @param int    $markLine  Line number to mark if required
+     *
+     * @return string Highlighted source HTML formatted
      */
     protected function highlightSource($fileName, $firstLine = 1, $numLines = null, $markLine = null)
     {
@@ -131,11 +135,12 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
     /**
      * Retrieve the source for the given test with syntax highlighting
      *
-     * @param   string      $fileName   path to the source file
-     * @param   int         $firstLine  first line number to show
-     * @param   int         $numLines   number of lines to show
-     * @param   int         $markLine   line number to mark if required
-     * @return  string                  highlighted source HTML formatted
+     * @param string $fileName  Path to the source file
+     * @param int    $firstLine First line number to show
+     * @param int    $numLines  Number of lines to show
+     * @param int    $markLine  Line number to mark if required
+     *
+     * @return string Highlighted source HTML formatted
      */
     protected function listing($suite, $test)
     {
@@ -150,14 +155,16 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
         $f = $r->getFileName();
         $s = $r->getStartLine();
         $e = $r->getEndLine();
+
         return '<h1>'.htmlentities($f).'</h1>'.$this->highlightSource($f, $s, ($e - $s) + 1);
     }
 
     /**
      * Return reference to named test in {@link $results}
      *
-     * @param   string      $name       test name
-     * @return  array                   reference to test
+     * @param string $name Test name
+     *
+     * @return array Reference to test
      */
     protected function &test($name)
     {
@@ -173,14 +180,16 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
             }
             $this->_test =& $this->_suite['tests'][$name];
         }
+
         return $this->_test;
     }
 
     /**
      * Return reference to named suite in {@link $results}
      *
-     * @param   string      $name       suite name
-     * @return  array                   reference to suite
+     * @param string $name Suite name
+     *
+     * @return array Reference to suite
      */
     protected function &suite($name)
     {
@@ -196,16 +205,16 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
             }
             $this->_suite =& $this->results['suites'][$name];
         }
+
         return $this->_suite;
     }
 
     /**
      * An error occurred.
      *
-     * @param   PHPUnit_Framework_Test  $test
-     * @param   Exception               $e
-     * @param   float                   $time
-     * @return  void
+     * @param PHPUnit_Framework_Test $test
+     * @param Exception              $e
+     * @param float                  $time
      */
     public function addError(PHPUnit_Framework_Test $test, \Exception $e, $time)
     {
@@ -217,10 +226,9 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
     /**
      * A failure occurred.
      *
-     * @param   PHPUnit_Framework_Test                 $test
-     * @param   PHPUnit_Framework_AssertionFailedError $e
-     * @param   float                                  $time
-     * @return  void
+     * @param PHPUnit_Framework_Test                 $test
+     * @param PHPUnit_Framework_AssertionFailedError $e
+     * @param float                                  $time
      */
     public function addFailure(PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time)
     {
@@ -232,10 +240,9 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
    /**
      * Incomplete test
      *
-     * @param   PHPUnit_Framework_Test  $test
-     * @param   Exception               $e
-     * @param   float                   $time
-     * @return  void
+     * @param PHPUnit_Framework_Test $test
+     * @param Exception              $e
+     * @param float                  $time
      */
     public function addIncompleteTest(PHPUnit_Framework_Test $test, \Exception $e, $time)
     {
@@ -247,10 +254,9 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
    /**
      * Skipped test
      *
-     * @param   PHPUnit_Framework_Test  $test
-     * @param   Exception               $e
-     * @param   float                   $time
-     * @return  void
+     * @param PHPUnit_Framework_Test $test
+     * @param Exception              $e
+     * @param float                  $time
      */
     public function addSkippedTest(PHPUnit_Framework_Test $test, \Exception $e, $time)
     {
@@ -262,8 +268,7 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
     /**
      * A test started.
      *
-     * @param   PHPUnit_Framework_Test  $test
-     * @return  void
+     * @param PHPUnit_Framework_Test $test
      */
     public function startTest(PHPUnit_Framework_Test $test)
     {
@@ -275,9 +280,8 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
     /**
      * A test ended.
      *
-     * @param   PHPUnit_Framework_Test  $test
-     * @param   float                   $time
-     * @return  void
+     * @param PHPUnit_Framework_Test $test
+     * @param float                  $time
      */
     public function endTest(PHPUnit_Framework_Test $test, $time)
     {
@@ -302,8 +306,7 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
     /**
      * A testsuite started.
      *
-     * @param   PHPUnit_Framework_TestSuite $suite
-     * @return  void
+     * @param PHPUnit_Framework_TestSuite $suite
      */
     public function startTestSuite(PHPUnit_Framework_TestSuite $suite)
     {
@@ -314,8 +317,7 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
     /**
      * A testsuite ended.
      *
-     * @param   PHPUnit_Framework_TestSuite $suite
-     * @return  void
+     * @param PHPUnit_Framework_TestSuite $suite
      */
     public function endTestSuite(PHPUnit_Framework_TestSuite $suite)
     {
@@ -335,7 +337,7 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
     /**
      * Get results
      *
-     * @return  array
+     * @return array
      */
     public function getResults()
     {
@@ -347,8 +349,7 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
      *
      * At the moment all writes are discarded.
      *
-     * @param   string      $buffer     data to write to output
-     * @return  void
+     * @param string $buffer Data to write to output
      */
     public function write($buffer)
     {
@@ -360,8 +361,7 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
      * The output is printed using the templates in the given
      * template directory {@link $tpldir}.
      *
-     * @param   PHPUnit_Framework_TestResult $result
-     * @return  void
+     * @param PHPUnit_Framework_TestResult $result
      */
     public function printResult(PHPUnit_Framework_TestResult $result)
     {
@@ -384,8 +384,7 @@ class PHPUnit_Html_Printer extends PHPUnit_Util_Printer implements PHPUnit_Frame
      * The output is printed using the templates in the given
      * template directory {@link $tpldir}.
      *
-     * @param   PHPUnit_Framework_TestResult $result
-     * @return  void
+     * @param PHPUnit_Framework_TestResult $result
      */
     public function printAborted(\Exception $e)
     {
